@@ -1,35 +1,47 @@
 # randomises goals from an input file (default: ./HLD_bingo_goals) and creates a Bingosync Custom Game file (default: ./HLD_bingo_board)
-import random
-import sys
+import sys, getopt, random
 from urllib.request import urlopen
 
 # set constants until remote goal list importing works
+shortopts = "pi:o:"
 default_paste_url = "https://pastebin.com/raw/WHjRDRiR"
 default_input_file = "./HLD_bingo_goals"
 default_output_file = "./HLD_bingo_board"
+paste = default_paste_url
+infile = default_input_file
+outfile = default_output_file
 local = True
 
-if len(sys.argv) > 1:
-    # parse command line args
-    if '-p' in sys.argv:
+# parse arguments
+options = getopt.getopt(sys.argv[1:], shortopts)[0]
+for option in options:
+    if option[0] == "-p":
         local = False
+    elif option[0] == "-i":
+        infile = option[1]
+    elif option[0] == "-o":
+        outfile = option[1]
 
+# open files
 if local:
     try:
-        goals = open("./HLD_bingo_goals", "r")
-        print("Reading goals from", default_input_file)
+        goals = open(infile, "r")
+        print("Reading goals from", infile)
     except:
-        print("Error: failed to open file:", default_input_file)
+        print("Error: failed to open file", infile)
         sys.exit()
 else:
     try:
-        goals = urlopen(default_paste_url)
-        print("Reading goals from", default_paste_url)
+        goals = urlopen(paste)
+        print("Reading goals from", paste)
     except:
-        print("Error: failed to open URL:", default_paste_url)
+        print("Error: failed to open URL", paste)
         sys.exit()
+try:
+    board = open(outfile, "w")
+except:
+    print("Error: failed to write file", outfile)
 
-board = open("./HLD_bingo_board", "w")
 goal_list = []
 
 # goal file format is 1 goal per line, lines starting with a hash are ignored
@@ -58,5 +70,5 @@ for goal in random_goal_list:
     goal_num += 1
 board.write("\n]")
 
-print("Board generated as", default_output_file)
+print("Board generated as", outfile)
 

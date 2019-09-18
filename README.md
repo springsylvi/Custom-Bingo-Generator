@@ -1,6 +1,17 @@
-# HLD-Bingo-Generator
+# Custom-Bingo-Generator
 
-Basic bingo card generator for Hyper Light Drifter.
-By default, requires text file of newline separated goals named HLD_bingo_goals in current directory. Creates HLD_bingo_board file, used for custom game on bingosync.com
+Basic bingo card generator for the Custom (Advanced) option on bingosync.com. Takes a list of goals and generates a list of 25 of them at random.
 
--p option will use the up-to-date version of the goal list at https://pastebin.com/raw/WHjRDRiR
+Synopsis:
+    python3 bingo_generator.py [-p] [-i filename] [-o filename]
+
+Options:
+    -p
+        Read goals from pastebin (default: ???) rather than a local file.
+
+    -i filename
+        If -p option is not used, read goals from filename instead of the default 
+        "./bingo_goals"
+
+    -o filename
+        Write board to filename instead of the default "./bingo_board"
