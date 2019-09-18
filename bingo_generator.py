@@ -1,12 +1,11 @@
-# randomises goals from an input file (default: ./HLD_bingo_goals) and creates a Bingosync Custom Game file (default: ./HLD_bingo_board)
 import sys, getopt, random
 from urllib.request import urlopen
 
 # set constants until remote goal list importing works
 shortopts = "pi:o:"
 default_paste_url = "https://pastebin.com/raw/WHjRDRiR"
-default_input_file = "./HLD_bingo_goals"
-default_output_file = "./HLD_bingo_board"
+default_input_file = "./bingo_goals"
+default_output_file = "./bingo_board"
 paste = default_paste_url
 infile = default_input_file
 outfile = default_output_file
