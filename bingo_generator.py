@@ -1,25 +1,30 @@
 import sys, getopt, random
 from urllib.request import urlopen
 
-# set constants until remote goal list importing works
-shortopts = "pi:o:"
-default_paste_url = "https://pastebin.com/raw/WHjRDRiR"
-default_input_file = "./bingo_goals"
-default_output_file = "./bingo_board"
-paste = default_paste_url
-infile = default_input_file
-outfile = default_output_file
-local = True
+shortopts = "p:i:o:"
+paste = ""
+infile = ""
+outfile = "bingo_board"
 
 # parse arguments
-options = getopt.getopt(sys.argv[1:], shortopts)[0]
+try:
+    options = getopt.getopt(sys.argv[1:], shortopts)[0]
+except getopt.GetoptError as optError:
+    print("Error:", optError)
+    sys.exit()
+
 for option in options:
     if option[0] == "-p":
         local = False
+        paste = option[1]
     elif option[0] == "-i":
+        local = True
         infile = option[1]
     elif option[0] == "-o":
         outfile = option[1]
+if paste == "" and infile == "":
+    print("Error: no goal list provided")
+    sys.exit()
 
 # open files
 if local:
