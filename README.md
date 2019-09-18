@@ -6,6 +6,7 @@ Synopsis:
     python3 bingo_generator.py [-p paste | -i filename] [-o filename]
 
 Options:
+
     -p paste
         Read goals from the specified pastebin URL, e.g. https://pastebin.com/raw/WHjRDRiR
 
